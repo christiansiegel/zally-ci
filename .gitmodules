@@ -1,0 +1,3 @@
+[submodule "zally"]
+	path = zally
+	url = https://github.com/zalando/zally.git

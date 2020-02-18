@@ -2,5 +2,4 @@ services:
   - docker
  
 script:
-  - git clone https://github.com/zalando/zally.git
-  - ls -la
+  - docker build -t christiansiegel/zally-server:latest -f zally/server/Dockerfile zally/server/
