@@ -1,6 +1,20 @@
-services:
-  - docker
- 
-script:
-  - docker build -t christiansiegel/zally-server:v1.3.0 -f zally/server/Dockerfile zally/server/
-  - docker build -t christiansiegel/zally-ui:0.1.1 -f ui/Dockerfile ui/
+os: linux
+language: shell
+env:
+  global:
+  - secure: W2BHBHUY2DA7HK/wQdnDqBIdnH+gvjt1zRpZeaJBkovhg0m2QqOghxVgbfR8WsN9bFx2HhzWEdBKzuFOHkgXlmj1OhgzOeI5n85hhn2LSJVkQIL91Bfs5o/AljK8oXBSmOB3q6jr8HK4ukoDqNa5/Yw9fzJee4JDkKx3aQizolqYx/KAI1DgWpjbkHW+MDBdtA4FaBEqrc3Y8Xi+OcwaZ5WsUN4+fHA4ttRnUs++H0EHnlVqYC8kWle1e8x4nvtqgXQeiW3zJ/2mAu7wBxEox5aA5xFnTrRgpQb3FxIbpah4azx5vDP+505mPvXV51jAM+vp9jnqQAYdW3vMygUyXc9kDInUKAUC5iFfK5iUtM2Si8QJGGnzSG0sjGtBdIRDSpW5xHLrSCUiPwMZMXjtQvG1ekLNLt2XCmfQItygYoQ3ATRYxquLucoA8whMwZgqr0CtK8wUEmgAWURR4L7wVn/imcJsvkbEcAZEN9EWB2y6MnVk8wNW7sLSyD0JELH7zs9nPfuz+eQ+g4Gyn+6/dY9mHtE1FMstkP7dZb5sgqIaT7u4ar/SbX9svUvKNnRjEzv8BCrM0w5kZsKMicS+/xOvrJkvmKw89FIRVALbHPEqXEjK+Mw637xFF6LTxjxD9TUa+DGMBTHblYQVetuMw+ps0C3r6zOh1libXFCADYs=
+  - secure: EFLVx3oSeeU0OMMALeTm7wUbE2n6e2EqVU2YYQJLouYbByQAnC7jROD0PWxDBYulLJ0byRT7UQzNwnaUE6rQ64fHeBcgS8GdqotN/J28GhnZaV3GLyD8EkBt2dsh3VW+SO90Z8rpfXICTwnWfyP9h9z+aIEhvXXMqTiqAblICsIDudkahCkV8JpbABsuKA1nZTioI5KiqVQ0XDlOev/kJacAsrZJSKzQ8MccDBtOJE0jI7INOQEWvbpyYg15fE4jPeiasFEYX/LH16BDzwhh4PH4ECcEdvnjfq2Jk1iOiJpjMo2Ll4nss5CMplKcp+jYzMP1b+oVD4vXPnYw6TXwxQuznKG7Lu5p038fZwtMARGVvdQmGjwkUSrN0O+utv8bQM0+YWEjgAGLzSExD2NQDsSEGWHqYjjP8KyjrbXkOWRKymosmRLCnNkwLFfqvIljHK5MUArQc8iEibmIDCxhHn9z+zHrJnUwMpvhaDJilH7SUQfp9fLUwoZAPgM597+nhthHC0i4zUrqumT9DSO1+ZOvULldDKYZlzUZOjuV3MOdBBrTKvIfk2kG2sv8orZkDW1MmwJGs2gtNW2mQ3CzWxD49TRK2UQ3/5v9Jr2rqGrsvs0+zkxsBmM7gjgloiSZC9ixVecKvMGWtiTXt9Mx+bmYaaB0UNkfHj+YGLKH3YE=
+jobs:
+  include:
+    - name: zally-server
+      language: shell
+      script:
+        - docker build -t christiansiegel/zally-server:latest -f zally/server/Dockerfile zally/server/
+        - echo "$DOCKER_ACCESS_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push christiansiegel/zally-server:latest
+    - name: zally-ui
+      language: shell
+      script:
+        - docker build -t christiansiegel/zally-ui:0.1.1 -f ui/Dockerfile ui/
+        - echo "$DOCKER_ACCESS_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push christiansiegel/zally-ui:0.1.1
