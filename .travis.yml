@@ -2,4 +2,5 @@ services:
   - docker
  
 script:
-  - docker build -t christiansiegel/zally-server:latest -f zally/server/Dockerfile zally/server/
+  - docker build -t christiansiegel/zally-server:v1.3.0 -f zally/server/Dockerfile zally/server/
+  - docker build -t christiansiegel/zally-ui:0.1.1 -f ui/Dockerfile ui/
