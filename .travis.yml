@@ -9,12 +9,14 @@ jobs:
     - name: zally-server
       language: shell
       script:
-        - docker build -t christiansiegel/zally-server:latest -f zally/server/Dockerfile zally/server/
+        - TAG=$(cd zally|git rev-parse --short HEAD)
+        - docker build -t christiansiegel/zally-server:$TAG -f zally/server/Dockerfile zally/server/
         - echo "$DOCKER_ACCESS_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker push christiansiegel/zally-server:latest
+        - docker push christiansiegel/zally-server:$TAG
     - name: zally-ui
       language: shell
       script:
-        - docker build -t christiansiegel/zally-ui:0.1.1 -f ui/Dockerfile ui/
+        - TAG=$(cd zally|git rev-parse --short HEAD)
+        - docker build -t christiansiegel/zally-ui:$TAG -f ui/Dockerfile ui/
         - echo "$DOCKER_ACCESS_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker push christiansiegel/zally-ui:0.1.1
+        - docker push christiansiegel/zally-ui:$TAG
