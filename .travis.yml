@@ -17,6 +17,6 @@ jobs:
       language: shell
       script:
         - TAG=$(cd zally|git rev-parse --short HEAD)
-        - docker build -t christiansiegel/zally-ui:$TAG -f ui/Dockerfile ui/
+        - docker build -t christiansiegel/zally-ui:$TAG -f zally/web-ui/Dockerfile zally/web-ui/
         - echo "$DOCKER_ACCESS_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker push christiansiegel/zally-ui:$TAG
